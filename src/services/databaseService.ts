@@ -16,7 +16,7 @@ export class Database {
   }
 
   public addPerson(person: Person): Boolean {
-    if (this.isUserInDatabase(person.cpf)) {
+    if (this.isUserInDatabase(person.cpf) || !person.name || !person.cpf) {
       return false;
     }
     this.database.push(person);

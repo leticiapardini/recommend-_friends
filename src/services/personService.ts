@@ -23,10 +23,10 @@ export class Person {
 
     this.friends.forEach((f) => allFriends.push(...f.friends));
 
-    allFriends = allFriends.filter((p) => p.cpf != this.cpf);
+    allFriends = allFriends.filter((person) => person.cpf != this.cpf);
 
     this.friends.forEach(() => {
-      allFriends = allFriends.filter((p) => p.cpf != this.cpf);
+      allFriends = allFriends.filter((person) => person.cpf != this.cpf);
     });
 
     let groupedFriends = Object.entries(groupByAndCount(allFriends, "cpf"));
@@ -36,8 +36,8 @@ export class Person {
     });
 
     const returnList: Number[] = [];
-    groupedFriends.forEach((f) => {
-      returnList.push(parseInt(f[0]));
+    groupedFriends.forEach((friends) => {
+      returnList.push(parseInt(friends[0]));
     });
 
     return returnList;

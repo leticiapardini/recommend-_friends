@@ -13,7 +13,11 @@ routes.post("/person", async (request: Request, response: Response) => {
     if (addPerson) {
       return response.status(200).json({ message: "Success! Person created" });
     }
-    return response.status(400).json({ message: "Person already exists" });
+    return response
+      .status(400)
+      .json({
+        message: "Person already exists or some field was not informed",
+      });
   } catch (error: any) {
     response.status(400).json({ message: error.message });
   }

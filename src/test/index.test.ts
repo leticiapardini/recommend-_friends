@@ -1,14 +1,14 @@
 import { Database } from "../services/databaseService";
 import { Person } from "../services/personService";
 
-describe("test /person", () => {
+describe("test /person , /clean, /relationship and /recommendations", () => {
   let database: Database;
 
   beforeEach(() => {
     database = new Database();
   });
 
-  test("Create New Person", () => {
+  test("Create a person in the database", () => {
     const person = new Person("Joao", "12345678910");
     const result = database.addPerson(person);
     expect(result).toBe(true);
@@ -18,7 +18,7 @@ describe("test /person", () => {
   test("Create two persons with the same cpf must be an error", () => {
     const person = new Person("pessoa 1", "12345678910");
     const person2 = new Person("pessoa 1", "12345678910");
-    const addPerson = database.addPerson(person);
+     database.addPerson(person);
     const result = database.addPerson(person2);
     expect(result).toBe(false);
   });
@@ -41,7 +41,7 @@ describe("test /person", () => {
     }
   });
 
-  test("Limpar database, deve deixar a base de dados sem nenhum registro", () => {
+  test("Clear database, should leave the database without any records", () => {
     const person = new Person("Pessoa", "12345678910");
     database.addPerson(person);
     expect(database.database).toHaveLength(1);
@@ -49,19 +49,19 @@ describe("test /person", () => {
     expect(database.database).toHaveLength(0);
   });
 
-  test("apos a inserção no database, busca por cpf deverá retornar a pessoa ", () => {
+  test("After insertion in the database, search for cpf should return the person", () => {
     const person = new Person("Pessoa 1 ", "12345678910");
     database.addPerson(person);
     const result = database.findByCpf(12345678910);
     expect(result).toBe(person);
   });
 
-  test("buscando usuário que não existe no database, ele deve retornar undefined ", () => {
+  test("Fetching user that doesn't exist in the database, it should return undefined", () => {
     const result = database.findByCpf(12345678910);
     expect(result).toBe(undefined);
   });
 
-  test("criando duas pessoas e fazendo o relacionamento entre elas, tem que adicionar os dados da pessoa em friends", () => {
+  test("Creating two people and making the relationship between them, you have to add the person's data in friends", () => {
     const person = new Person("Pessoa 1 ", "12345678910");
     const person2 = new Person("Pessoa 2 ", "12345678911");
     database.addPerson(person);
@@ -72,7 +72,7 @@ describe("test /person", () => {
     expect(person2.friends).toHaveLength(1);
   });
 
-  test("criando duas pessoas e fazendo o relacionamento entre elas, mas enviando um cpf menor do que o experado ", () => {
+  test("Creating two people and making the relationship between them, but sending a cpf smaller than expected", () => {
     try {
       const person = new Person("Pessoa 1 ", "12345678910");
       const person2 = new Person("Pessoa 2 ", "123456781");
@@ -84,7 +84,7 @@ describe("test /person", () => {
     }
   });
 
-  test("criando 5 pessoas e os relacionamentos entre elas, a função deve retornar uma lista de CPFs de todos os amigos dos amigos do usuário informado que não são seus amigos  ", () => {
+  test("Creating 5 people and the relationships between them, the function should return a list of CPFs of all the friends of the friends of the informed user who are not his friends", () => {
     const A = new Person("A ", "12345678910");
     const B = new Person("B ", "12345678911");
     const C = new Person("C ", "12345678912");
@@ -107,7 +107,7 @@ describe("test /person", () => {
     expect(result).toContain(E.cpf);
   });
 
-  test("criando 3 pessoas e os relacionamentos entre elas, a função deve retornar uma lista vazia, pq não terá amigo de amigo", () => {
+  test("Creating 3 people and the relationships between them, the function must return an empty list, because there will be no friend of friend", () => {
     const A = new Person("A ", "12345678910");
     const B = new Person("B ", "12345678911");
     const C = new Person("C ", "12345678912");
@@ -123,7 +123,7 @@ describe("test /person", () => {
     expect(result).toHaveLength(0);
   });
 
-  test("criando três pessoas uma com cpf invalido e os relacionamentos entre elas, a função deve retornar erro de cpf invalido ", () => {
+  test("Creating three people one with invalid cpf and the relationships between them, the function should return invalid cpf error", () => {
     try {
       const A = new Person("A ", "12345678910");
       const B = new Person("B ", "12345678911");
