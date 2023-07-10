@@ -13,7 +13,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 ```bash
 
 # Clonar os seguintes repositórios
-git clone https://github.com/leticiapardini/recommend-_friends.git
+git clone https://github.com/leticiapardini/recommend_friends.git
 
 # Entrar numa IDE de sua preferência e executar o comando:
 npm install
